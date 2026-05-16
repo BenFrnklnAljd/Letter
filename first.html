@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Read</title>
+  <link rel="stylesheet" href="assets/style/svg.css">
+</head>
+<body>
+
+<style>
+  /* Float wrapper — animation lives here only */
+  #book-float {
+    display: flex;
+    justify-content: center;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+  }
+
+  /* Book scene — no transform/animation here */
+  #book-scene {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+    min-height: 420px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  #hint { font-size:13px; color:#aaa; margin-top:1.5rem; transition:opacity 0.4s; }
+
+  .cover-left  { transform-origin: right center; transform: perspective(900px) rotateY(0deg); transition: transform 0.8s cubic-bezier(.4,0,.2,1); }
+  .cover-right { transform-origin: left center;  transform: perspective(900px) rotateY(0deg); transition: transform 0.8s cubic-bezier(.4,0,.2,1); }
+  .pages-left  { opacity:0; transition: opacity 0.3s 0.5s; }
+  .pages-right { opacity:0; transition: opacity 0.3s 0.5s; }
+  .spine-shadow { transition: opacity 0.5s; }
+
+  .open .cover-left  { transform: perspective(900px) rotateY(-155deg); }
+  .open .cover-right { transform: perspective(900px) rotateY(155deg); }
+  .open .pages-left  { opacity:1; }
+  .open .pages-right { opacity:1; }
+  .open .spine-shadow { opacity:0.06; }
+</style>
+
+<div id="book-float">
+  <div id="book-scene" onclick="toggleBook()">
+ 
+    <svg width="500" height="400" viewBox="20 0 500 400"
+         xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+ 
+      <defs>
+        <clipPath id="cl"><rect x="62" y="44" width="196" height="268"/></clipPath>
+        <clipPath id="cr"><rect x="342" y="44" width="196" height="268"/></clipPath>
+        <clipPath id="ct"><rect x="62" y="44" width="476" height="268"/></clipPath>
+      </defs>
+ 
+
+      <!-- ── LEFT COVER ── -->
+      <g class="cover-left">
+        <!-- Cover body -->
+        <rect x="62" y="40" width="200" height="276" rx="5" fill="#6B2F10"/>
+        <!-- Leather texture lines -->
+        <rect x="62" y="40" width="200" height="276" rx="5" fill="none" stroke="#5A2509" stroke-width="0.5" opacity="0.6"/>
+        <!-- Top edge -->
+        <rect x="62" y="40" width="200" height="10" rx="3" fill="#8B3F18"/>
+        <!-- Bottom edge -->
+        <rect x="62" y="306" width="200" height="10" rx="3" fill="#8B3F18"/>
+        <!-- Inner border decorative frame -->
+        <rect x="76" y="54" width="172" height="248" rx="3" fill="none" stroke="#C49060" stroke-width="1.2"/>
+        <rect x="80" y="58" width="164" height="240" rx="2" fill="none" stroke="#C49060" stroke-width="0.5" opacity="0.6"/>
+        <!-- Corner ornaments -->
+        <circle cx="80"  cy="58"  r="3" fill="#C49060"/>
+        <circle cx="244" cy="58"  r="3" fill="#C49060"/>
+        <circle cx="80"  cy="298" r="3" fill="#C49060"/>
+        <circle cx="244" cy="298" r="3" fill="#C49060"/>
+        <!-- Title plate background -->
+        <rect x="96" y="130" width="132" height="80" rx="3" fill="#5A2509" opacity="0.5"/>
+        <rect x="98" y="132" width="128" height="76" rx="2" fill="none" stroke="#D4A060" stroke-width="0.8"/>
+        <!-- Title text -->
+        <text x="162" y="172" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="bold" fill="#F5DFC0" letter-spacing="1.5">Our Story</text>
+        <text x="162" y="180" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" fill="#C49A6A" letter-spacing="2"></text>
+        <!-- Spine shadow on cover -->
+        <rect x="252" y="40" width="10" height="276" fill="#3A1505" opacity="0.4"/>
+      </g>
+ 
+      <!-- ── RIGHT COVER (back) ── -->
+      <g class="cover-right">
+        <rect x="280" y="40" width="200" height="276" rx="5" fill="#4A1E08"/>
+        <rect x="280" y="40" width="200" height="10" rx="3" fill="#6B2F10"/>
+        <rect x="280" y="306" width="200" height="10" rx="3" fill="#6B2F10"/>
+        <rect x="280" y="40" width="10" height="276" fill="#2A0D02" opacity="0.4"/>
+        <!-- Back cover inner frame -->
+        <rect x="295" y="54" width="172" height="248" rx="3" fill="none" stroke="#8B5030" stroke-width="0.8" opacity="0.6"/>
+        <!-- Corner ornaments -->
+        <circle cx="300" cy="58"  r="2.5" fill="#8B5030" opacity="0.7"/>
+        <circle cx="462" cy="58"  r="2.5" fill="#8B5030" opacity="0.7"/>
+        <circle cx="300" cy="298" r="2.5" fill="#8B5030" opacity="0.7"/>
+        <circle cx="462" cy="298" r="2.5" fill="#8B5030" opacity="0.7"/>
+      </g>
+ 
+      <!-- ── SPINE ── -->
+      <rect x="260" y="36" width="20" height="284" rx="3" fill="#2E1004"/>
+      <!-- Spine highlight -->
+      <rect x="261" y="36" width="4"  height="284" rx="1" fill="#6B2F10" opacity="0.55"/>
+      <!-- Spine shadow -->
+      <rect x="276" y="36" width="4"  height="284" rx="1" fill="#0F0401" opacity="0.55"/>
+      <!-- Spine top/bottom caps -->
+      <rect x="258" y="33" width="24" height="6"   rx="2" fill="#3A1505"/>
+      <rect x="258" y="318" width="24" height="6"  rx="2" fill="#3A1505"/>
+      <!-- Spine title (vertical text via tspans) -->
+      <text font-family="Georgia,serif" font-size="7" fill="#C49060" letter-spacing="1" opacity="0.8"
+            transform="translate(272,290) rotate(-90)">OUR STORY</text>
+ 
+      <!-- ── GROUND SHADOW ── -->
+      <ellipse cx="270" cy="336" rx="210" ry="10" fill="#0a0604" opacity="0.5"/>
+ 
+    </svg>
+
+  </div>
+
+</div>
+
+<br><br>
+<div class="grid-item">
+  <a href="main.html" target="_blank">CLICK ME!</a>
+</div>
+<br><br>
+
+<script>
+  var isOpen = false;
+  function toggleBook() {
+    isOpen = !isOpen;
+    document.getElementById('book-svg').className = isOpen ? 'open' : '';
+    document.getElementById('hint').textContent = isOpen ? 'Click to close' : 'Click the book to open it';
+  }
+</script>
+
+<script src="assets/javascprt/confetti.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+        /* Add content over the parallax image */
+        .content {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column; /* Arrange children in a column */
+            align-items: center;
+            color: black;
+            font-family: 'Waterfall';
+        }
+
+        .content h1 {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+
+        .head {
+            text-align: top; /* Ensure text is centered */
+            margin-top: 50%;
+        }
+
+        .head h1{
+            font-size: 6rem;
+            text-align: center;
+            margin: 0;
+            color: red
+        }
+
+        .head p{
+            font-size: 1 em;
+            text-align: center;
+            margin: 0;
+            color: red
+        }
+
+        .left, .right {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            font-family: 'Charm';
+        }
+
+        .left {
+            position: relative;
+            right: 80%;
+            transform: translateY(-230%);
+            text-align: justify;
+            color: black;
+            font-size: 1.6rem;   
+            font-family: 'Charm';
+            color: aliceblue;
+        }
+
+        .right {
+            position: absolute;
+            bottom: -30%;
+            transform: translateX(160%);
+            text-align: justify;
+            color: black;
+            font-size: 1.6rem;  
+            font-family: 'Charm';
+        }
+
+        .container {
+            background: linear-gradient(to bottom,  #000000,  #e2e6e7);
+        }
+
+        /* Mobile responsive - iPhone 12 */
+        @media (max-width: 430px) {
+            .content {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                width: 100%;
+                padding: 60px 20px 30px;
+            }
+
+            .head {
+                margin-top: 0;
+            }
+
+            .head h1 {
+                font-size: 2.5rem;
+            }
+
+            .left {
+                position: static;
+                right: auto;
+                transform: none;
+                text-align: center;
+                font-size: 1rem;
+                padding: 15px 10px;
+            }
+
+            .right {
+                position: static;
+                bottom: auto;
+                transform: none;
+                text-align: center;
+                font-size: 1rem;
+                padding: 15px 10px;
+            }
+        }

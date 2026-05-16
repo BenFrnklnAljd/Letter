@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Charm" rel="stylesheet">
+  <title>Read</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body, html {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: black;
+    }
+
+    /* Fullscreen dual-row slider background */
+    .slider-wrap {
+      margin-top: 70px;
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      display: fixed;
+      flex-direction: column;
+    }
+
+    .slider {
+      width: 100%;
+      height: 45vh;
+      flex-shrink: 0;
+    }
+
+    .slider .list {
+      display: flex;
+      height: 100%;
+      width: max-content;
+      gap:20px;
+    }
+
+    .slider.row-top .list {
+      animation: slideLeft calc(6s * var(--quantity)) linear infinite;
+    }
+
+    .slider.row-bottom .list {
+      animation: slideRight calc(6s * var(--quantity)) linear infinite;
+    }
+
+    .slider .item {
+      width: calc(var(--width) - 16px);
+      height: 35vh;
+      flex-shrink: 0;
+    }
+
+    .slider .item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @keyframes slideLeft {
+      from { transform: translateX(0); }
+      to   { transform: translateX(calc(var(--width) * var(--quantity) * -1)); }
+    }
+
+    @keyframes slideRight {
+      from { transform: translateX(calc(var(--width) * var(--quantity) * -1)); }
+      to   { transform: translateX(0); }
+    }
+
+    /* Button: fixed top-right, never moves */
+    #start-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 20;
+      background: linear-gradient(180deg, #747474, #acacac);
+      border: none;
+      padding: 5px 10px;
+      font-size: 1.1em;
+      font-family: 'Charm', cursive;
+      color: #ffffff;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #start-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Typed text: appears below the button, anchored to top-right */
+    #typed-text {
+      position: fixed;
+      top: 80px;
+      left: 30px;
+      z-index: 10;
+      font-family: 'Charm', cursive;
+      font-size: clamp(1rem, 2vw, 1em);
+      color: #fff;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+      max-width: min(320px, 80vw);
+      line-height: 1.9;
+      text-align: left;
+    }
+
+    @media (max-width: 430px) {
+      #start-btn { font-size: 0.95em; padding: 5px 10px; }
+      #typed-text { font-size: 1rem; top: 65px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dual-row fullscreen slider background -->
+  <div class="slider-wrap">
+
+    <!-- Top row: slides left -->
+    <div class="slider row-top" style="--width: 55vw; --quantity: 5;">
+      <div class="list">
+        <div class="item"><img src="assets/frontimg/s1.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s2.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s3.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s4.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s5.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s1.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s2.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s3.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s4.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s5.jpeg"  alt=""></div>
+      </div>
+    </div>
+
+    <!-- Bottom row: slides right (reverse) -->
+    <div class="slider row-bottom" style="--width: 55vw; --quantity: 5;">
+      <div class="list">
+        <div class="item"><img src="assets/frontimg/s5.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s4.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s3.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s2.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s1.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s5.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s4.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s3.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s2.jpeg"  alt=""></div>
+        <div class="item"><img src="assets/frontimg/s1.jpeg"  alt=""></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Fixed button -->
+  <button id="start-btn">Click me</button>
+  <br>
+
+  <!-- Typed text appears below the button -->
+  <span id="typed-text"></span>
+
+  <script>
+    const message = `When our eyes first met, it didn’t feel like an ordinary moment. It felt like fate quietly answering a wish my heart had carried for so long — the wish to find someone genuine, loving, and willing to walk through life beside me.
+<br><br> From that moment, a calm and beautiful feeling slowly filled my heart and mind. For the first time, something within me felt complete, and I realized that you were the missing piece I had been searching for all along.
+<br><br> As the night grew deeper, it felt as though our souls began to speak in ways words never could. Together, we stepped into a world that felt softer, warmer, and more magical. In your presence, I found comfort, trust, and a connection so rare that it made every moment unforgettable.
+<br><br> You brought new meaning into my life and showed me a kind of happiness I never knew I needed. In you, I found more than love — I found a home for my heart, a hand to hold through every season, and a soul I want beside me for the rest of my journey.`;
+    const output = document.getElementById('typed-text');
+    const btn    = document.getElementById('start-btn');
+    let   timer  = null;
+    let   i      = 0;
+    let   typed  = '';
+ 
+    // Pre-parse: split message into plain chars and <br> tags
+    const tokens = [];
+    const tokenRe = /(<br\s*\/?>)|([^<])/gi;
+    let m;
+    while ((m = tokenRe.exec(message)) !== null) {
+      tokens.push(m[0]);
+    }
+ 
+    btn.addEventListener('click', function () {
+      clearTimeout(timer);
+      output.innerHTML = '';
+      typed = '';
+      i = 0;
+      btn.disabled = true;
+      (function tick() {
+        if (i < tokens.length) {
+          typed += tokens[i++];
+          output.innerHTML = typed;
+          timer = setTimeout(tick, 20);
+        } else {
+          btn.disabled = false;
+        }
+      })();
+    });
+  </script>
+
+</body>
+</html>
